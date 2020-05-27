@@ -1,0 +1,9 @@
+configurable:
+  searchUrlTemplate:
+    displayName: "Google Search URL"
+    description: "Google search template url. {} is the placeholder"
+    value: "https://google.ca/search?q={}"
+  suggestionUrlTemplate:
+    displayName: "Google Search Suggestion URL"
+    description: "Google search suggestion template url. {} is the placeholder"
+    value: "https://suggestqueries.google.com/complete/search?client=safari&q={}"
