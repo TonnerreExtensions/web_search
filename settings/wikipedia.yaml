@@ -1,0 +1,9 @@
+configurable:
+  searchUrlTemplate:
+    displayName: "Wikipedia URL"
+    description: "Wikipedia template url. {} is the placeholder"
+    value: "https://en.m.wikipedia.org/wiki/{}"
+  suggestionUrlTemplate:
+    displayName: "Wikipedia Suggestion URL"
+    description: "Wikipedia suggestion template url. {} is the placeholder"
+    value: "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search={}&namespace=0&limit=10&suggest=true"

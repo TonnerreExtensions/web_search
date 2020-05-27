@@ -1,0 +1,9 @@
+configurable:
+  searchUrlTemplate:
+    displayName: "Youtube URL"
+    description: "Youtube template url. {} is the placeholder"
+    value: "https://www.youtube.com/results?search_query={}"
+  suggestionUrlTemplate:
+    displayName: "Youtube Suggestion URL"
+    description: "Youtube suggestion template url. {} is the placeholder"
+    value: "https://clients1.google.com/complete/search?client=safari&q={}"

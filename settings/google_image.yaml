@@ -1,0 +1,9 @@
+configurable:
+  searchUrlTemplate:
+    displayName: "Google Image Search URL"
+    description: "Google image search template url. {} is the placeholder"
+    value: "https://google.ca/search?q={}&tbm=isch"
+  suggestionUrlTemplate:
+    displayName: "Google Image Search Suggestion URL"
+    description: "Google image search suggestion template url. {} is the placeholder"
+    value: "https://suggestqueries.google.com/complete/search?client=safari&q={}"

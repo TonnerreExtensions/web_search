@@ -2,12 +2,21 @@
 
 features=(
     "google"
+    "google"
+    "google"
+    "wikipedia"
 )
 providers=(
     "Google"
+    "Google Image"
+    "Youtube"
+    "Wikipedia"
 )
 default_url=(
     "https://google.com"
+    "https://www.google.com/imghp"
+    "https://youtube.com"
+    "https://wikipedia.org"
 )
 mkdir -p outcome
 for index in ${!providers[@]}; do
@@ -15,7 +24,8 @@ for index in ${!providers[@]}; do
     mkdir -p temporary
     mkdir -p temporary/executables
     mkdir -p temporary/resources
-    provider=`echo "${providers[$index]}" | tr '[:upper:]' '[:lower:]'`
+    provider=`echo "${providers[$index]}" |\
+        tr '[:upper:]' '[:lower:]' | tr " " "_"`
     cp target/release/web_search temporary/executables/main
     cp "profiles/$provider.yaml" temporary/profile.yaml
     cp "settings/$provider.yaml" temporary/settings.yaml

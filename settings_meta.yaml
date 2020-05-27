@@ -1,0 +1,27 @@
+internal:
+  keyword:
+    displayName: "Search keyword"
+    description: "Keyword used to trigger search for specific search engine"
+    value:
+      google: "google"
+      amazon: "amazon"
+      googleImage: "image"
+      googleMap: "map"
+      wikipedia: "wikipedia"
+  searchURL:
+    displayName: "Search URL"
+    description: "Template URL used for search. Use {} as the placeholder for searching content"
+    value:
+      google: "https://google.ca/search?q={}"
+      amazon: "https://www.amazon.ca/s/?field-keywords={}"
+      googleImage: "https://google.ca/search?q={}&tbm=isch"
+      googleMap: "https://maps.google.ca/?q={}"
+      wikipedia: "https://en.m.wikipedia.org/wiki/{}"
+  prefetchURL:
+    displayName: "Suggestions"
+    description: "Template URL for search engine with suggestions. Please match the key above. Use {} as the placeholder"
+    value:
+      google: "https://suggestqueries.google.com/complete/search?client=safari&q={}"
+      amazon: "https://completion.amazon.com/search/complete?search-alias=aps&client=amazon-search-ui&mkt=1&q={}"
+      googleImage: "https://suggestqueries.google.com/complete/search?client=safari&q={}"
+      wikipedia: "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search={}&namespace=0&limit=10&suggest=true"
