@@ -1,5 +1,6 @@
 use crate::config::Config;
 use crate::service::Service;
+use htmlescape::decode_html;
 #[allow(unused_imports)]
 use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 use serde_json::Value;
@@ -21,10 +22,12 @@ fn process_json(json: &Value, config: &Config) -> Option<Vec<Service>> {
         .as_array()?
         .iter()
         .filter_map(|suggestion| suggestion.get(0)?.as_str())
+        .map(decode_html)
+        .filter_map(Result::ok)
         .map(|suggestion| {
             let search_url =
                 config.search_url(&utf8_percent_encode(&suggestion, FRAGMENT).to_string());
-            crate::query::build_service(search_url, suggestion, suggestion)
+            crate::query::build_service(search_url, &suggestion, &suggestion)
         })
         .collect::<Vec<_>>();
     Some(json)
@@ -46,7 +49,8 @@ fn process_json(json: &Value, _config: &Config) -> Option<Vec<Service>> {
         .map(|val| val.as_str());
     let services = titles
         .zip(urls)
-        .filter_map(|(title, url)| Some(crate::query::build_service(url?, title?, title?)))
+        .filter_map(|(title, url)| Some((decode_html(title?).ok()?, url?)))
+        .map(|(title, url)| crate::query::build_service(url, &title, &title))
         .collect();
     Some(services)
 }
