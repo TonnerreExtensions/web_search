@@ -28,7 +28,7 @@ pub fn build_service<S: Into<String>, T: Into<String>, R: Into<String>>(
         id: id.into(),
         title: title.into(),
         subtitle: format!(
-            concat!("Search {} from ", env!("PROVIDER_NAME")),
+            concat!(r#"Search "{}" from "#, env!("PROVIDER_NAME")),
             request.into()
         ),
     }

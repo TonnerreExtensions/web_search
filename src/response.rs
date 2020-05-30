@@ -3,14 +3,14 @@ use serde_json::Result;
 
 #[derive(Serialize)]
 pub struct Response<'a, S: Serialize> {
-    identifier: &'a str,
+    provider: &'a str,
     services: Vec<S>,
 }
 
 impl<'a, S: Serialize> Response<'a, S> {
     pub fn new(identifier: &'a str, services: Vec<S>) -> Self {
         Response {
-            identifier,
+            provider: identifier,
             services,
         }
     }
