@@ -4,7 +4,7 @@ use crate::service::Service;
 use crate::suggestion_proc;
 
 pub fn query(request: &str, output: &str, identifier: &str, config: Config) {
-    let initial_service = build_service(env!("DEFAULT_URL"), env!("PROVIDER_NAME"), "...");
+    let initial_service = build_service(config.main_url(), env!("PROVIDER_NAME"), "anything");
     if let Ok(initial_response) =
         Response::new(identifier, vec![initial_service]).serialize_to_json()
     {

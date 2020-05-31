@@ -1,9 +1,8 @@
 configurable:
-  searchUrlTemplate:
+  mainUrl:
     displayName: "Google Image Search URL"
-    description: "Google image search template url. {} is the placeholder"
-    value: "https://google.ca/search?q={}&tbm=isch"
-  suggestionUrlTemplate:
-    displayName: "Google Image Search Suggestion URL"
-    description: "Google image search suggestion template url. {} is the placeholder"
-    value: "https://suggestqueries.google.com/complete/search?client=safari&q={}"
+    description: "Google image search template url. You can change the .com to your regional code for localized results"
+    value: "https://google.ca"
+internal:
+  queryParameter: "search?q={}&tbm=isch"
+  suggestionUrlTemplate: "https://suggestqueries.google.com/complete/search?client=safari&q={}"

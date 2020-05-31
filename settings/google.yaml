@@ -1,9 +1,8 @@
 configurable:
-  searchUrlTemplate:
+  mainUrl:
     displayName: "Google Search URL"
-    description: "Google search template url. {} is the placeholder"
-    value: "https://google.ca/search?q={}"
-  suggestionUrlTemplate:
-    displayName: "Google Search Suggestion URL"
-    description: "Google search suggestion template url. {} is the placeholder"
-    value: "https://suggestqueries.google.com/complete/search?client=safari&q={}"
+    description: "Google search template url. You can change the .com to your regional code for localized results"
+    value: "https://google.com"
+internal: 
+  queryParameter: "search?q={}"
+  suggestionUrlTemplate: "https://suggestqueries.google.com/complete/search?client=safari&q={}"

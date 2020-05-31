@@ -1,9 +1,8 @@
 configurable:
-  searchUrlTemplate:
+  mainUrl:
     displayName: "Youtube URL"
-    description: "Youtube template url. {} is the placeholder"
-    value: "https://www.youtube.com/results?search_query={}"
-  suggestionUrlTemplate:
-    displayName: "Youtube Suggestion URL"
-    description: "Youtube suggestion template url. {} is the placeholder"
-    value: "https://clients1.google.com/complete/search?client=safari&q={}"
+    description: "Youtube template url. You can change the .com to your regional code for localized results"
+    value: "https://www.youtube.com"
+internal:
+  queryParameter: "results?search_query={}"
+  suggestionUrlTemplate: "https://clients1.google.com/complete/search?client=safari&q={}"

@@ -12,15 +12,19 @@ providers=(
     "Youtube"
     "Wikipedia"
 )
-default_url=(
-    "https://google.com"
-    "https://www.google.com/imghp"
-    "https://youtube.com"
-    "https://wikipedia.org"
-)
+
+function buildrs {
+    echo "fn main() { println!(\"cargo:rustc-env=PROVIDER_NAME=$1\");" } > build.rs
+}
+
+function clean_buildrs {
+    rm build.rs
+}
+
 mkdir -p outcome
 for index in ${!providers[@]}; do
-    PROVIDER_NAME=${providers[$index]} DEFAULT_URL=${default_url[$index]} cargo build --features ${features[$index]} --release
+    buildrs "${providers[$index]}"
+    PROVIDER_NAME=${providers[$index]} cargo build --features ${features[$index]} --release
     mkdir -p temporary
     mkdir -p temporary/executables
     mkdir -p temporary/resources
@@ -36,3 +40,4 @@ for index in ${!providers[@]}; do
     cd ..
     rm -r temporary
 done
+clean_buildrs
