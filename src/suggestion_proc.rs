@@ -6,13 +6,7 @@ use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 use serde_json::Value;
 
 #[allow(dead_code)]
-const FRAGMENT: &AsciiSet = &CONTROLS
-    .add(b' ')
-    .add(b'"')
-    .add(b'<')
-    .add(b'>')
-    .add(b'`')
-    .add(b'&');
+const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 
 #[cfg(feature = "google")]
 fn process_json(json: &Value, config: &Config) -> Option<Vec<Service>> {
@@ -63,7 +57,8 @@ pub fn process_suggestions(config: &Config, request: &str) -> Vec<Service> {
     let response = match ureq::get(&suggestion_url).call().into_json() {
         Ok(response) => response,
         Err(error) => {
-            println!("Request error: {}", error);
+            print!(env!("PROVIDER_NAME"));
+            println!(": Request error: {}", error);
             return vec![];
         }
     };
