@@ -10,6 +10,9 @@ pub fn query(request: &str, output: &str, identifier: &str, config: Config) {
     {
         std::fs::write(output, initial_response).expect("OUTPUT closed");
     }
+    if request.is_empty() {
+        return;
+    }
     let suggestions = suggestion_proc::process_suggestions(&config, request);
     if suggestions.is_empty() {
         return;
