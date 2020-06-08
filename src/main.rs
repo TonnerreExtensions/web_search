@@ -46,6 +46,6 @@ fn main() {
     } else if let Some(id) = matches.value_of("execute") {
         execute::execute(id.trim());
     } else if let Some(id) = matches.value_of("alter_execute") {
-        execute::execute(id.trim());
+        execute::preview(id.trim());
     }
 }

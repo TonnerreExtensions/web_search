@@ -14,7 +14,7 @@ providers=(
 )
 
 function buildrs {
-    echo "fn main() { println!(\"cargo:rustc-env=PROVIDER_NAME=$1\");" } > build.rs
+    echo "fn main() { println!(\"cargo:rustc-env=PROVIDER_NAME=$1\"); }" > build.rs
 }
 
 function clean_buildrs {

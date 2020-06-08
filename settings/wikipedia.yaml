@@ -2,7 +2,7 @@ configurable:
   mainUrl:
     displayName: "Wikipedia URL"
     description: "Wikipedia template url. You can change the .com to your regional code for localized results"
-    value: "https://en.m.wikipedia.org"
+    value: "https://en.wikipedia.org"
 internal:
   queryParameter: "wiki/{}"
   suggestionUrlTemplate: "https://en.wikipedia.org//w/api.php?action=opensearch&format=json&formatversion=2&search={}&namespace=0&limit=10&suggest=true"
