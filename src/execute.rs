@@ -18,7 +18,7 @@ pub fn preview(id: &str) {
    <string>{}</string>
 </dict>
 </plist>"#,
-        id
+        escape_xml(id)
     );
     let preview_file_path = std::env::temp_dir().join("preview_file.webloc");
     std::fs::write(&preview_file_path, preview_file).expect("Failed to write webloc");
@@ -29,6 +29,27 @@ pub fn preview(id: &str) {
         .stderr(Stdio::null())
         .spawn()
         .expect("Failed to spawn");
+}
+
+#[cfg(target_os = "macos")]
+fn escape_xml(id: &str) -> String {
+    let mut escaped = String::new();
+    for char in id.chars() {
+        let mapped = match char {
+            '&' => "&amp;",
+            '<' => "&lt;",
+            '>' => "&gt;",
+            '"' => "&quot;",
+            '\'' => "&apos;",
+            _ => "",
+        };
+        if mapped.is_empty() {
+            escaped.push(char);
+        } else {
+            escaped.extend(mapped.chars());
+        }
+    }
+    escaped
 }
 
 #[cfg(not(target_os = "macos"))]
