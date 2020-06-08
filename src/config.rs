@@ -1,5 +1,10 @@
+#[allow(unused_imports)]
+use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 use serde::Deserialize;
 use serde_json::Result;
+
+#[allow(dead_code)]
+const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 
 #[derive(Deserialize)]
 pub struct Config {
@@ -35,10 +40,11 @@ impl Config {
     }
 
     pub fn search_url(&self, target: &str) -> String {
+        let target = utf8_percent_encode(target, FRAGMENT).to_string();
         format!(
             "{}/{}",
             self.configurable.main_url.value.trim_end_matches("/"),
-            self.internal.query_parameter.replace("{}", target)
+            self.internal.query_parameter.replace("{}", &target)
         )
     }
 
