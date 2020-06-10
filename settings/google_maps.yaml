@@ -1,0 +1,12 @@
+configurable:
+  mainUrl:
+    displayName: "Google Maps Search URL"
+    description: "Google Maps search template url. You can change the .com to your regional code for localized results"
+    value: "https://maps.google.com"
+  apiKey:
+    displayName: "Google Maps API Key"
+    description: "Put your API Key here to enable search suggestions"
+    value: ""
+internal:
+  queryParameter: "?q={}"
+  suggestionUrlTemplate: "https://maps.googleapis.com/maps/api/place/autocomplete/json?input={}&key={API_KEY}"

@@ -43,6 +43,24 @@ fn process_json(json: &Value, _config: &Config) -> Option<Vec<Service>> {
     Some(services)
 }
 
+#[cfg(feature = "google_maps")]
+fn process_json(json: &Value, config: &Config) -> Option<Vec<Service>> {
+    let predictions = json.get("predictions")?.as_array()?;
+    let mut services = vec![];
+    for prediction in predictions {
+        let text_structure = prediction.get("structured_formatting")?;
+        let title = decode_html(text_structure.get("main_text")?.as_str()?).ok()?;
+        let subtitle = decode_html(text_structure.get("secondary_text")?.as_str()?).ok()?;
+        let url = config.search_url(prediction.get("description")?.as_str()?);
+        services.push(Service {
+            id: url,
+            title,
+            subtitle,
+        })
+    }
+    Some(services)
+}
+
 pub fn process_suggestions(config: &Config, request: &str) -> Vec<Service> {
     let suggestion_url = match config.suggestion_url(request) {
         Some(url) => url,

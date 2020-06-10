@@ -4,7 +4,13 @@ use serde::Deserialize;
 use serde_json::Result;
 
 #[allow(dead_code)]
-const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
+const FRAGMENT: &AsciiSet = &CONTROLS
+    .add(b' ')
+    .add(b'"')
+    .add(b'<')
+    .add(b'>')
+    .add(b'`')
+    .add(b'&');
 
 #[derive(Deserialize)]
 pub struct Config {
@@ -23,6 +29,8 @@ pub struct Internal {
 #[serde(rename_all = "camelCase")]
 struct Configurable {
     main_url: ConfigValue,
+    #[cfg(feature = "api_key")]
+    api_key: ConfigValue,
 }
 
 #[derive(Deserialize)]
@@ -41,42 +49,26 @@ impl Config {
 
     pub fn search_url(&self, target: &str) -> String {
         let target = utf8_percent_encode(target, FRAGMENT).to_string();
+        let main_url = self.configurable.main_url.value.trim_end_matches("/");
+        #[cfg(feature = "api_key")]
+        let main_url = main_url.replace("{API_KEY}", &self.configurable.api_key.value);
         format!(
             "{}/{}",
-            self.configurable.main_url.value.trim_end_matches("/"),
+            main_url,
             self.internal.query_parameter.replace("{}", &target)
         )
     }
 
     pub fn suggestion_url(&self, target: &str) -> Option<String> {
-        self.internal
+        let suggestion_url = self
+            .internal
             .suggestion_url_template
             .as_ref()
-            .map(|internal| internal.replace("{}", target))
-    }
-}
+            .map(|internal| internal.replace("{}", target));
+        #[cfg(feature = "api_key")]
+        let suggestion_url = suggestion_url
+            .map(|internal| internal.replace("{API_KEY}", &self.configurable.api_key.value));
 
-#[cfg(test)]
-mod config_tests {
-    use crate::config::{Config, ConfigValue, Configurable, Internal};
-
-    #[test]
-    fn test_fill_in_template() {
-        let config = Config {
-            configurable: Configurable {
-                main_url: ConfigValue {
-                    value: "mainURL".to_owned(),
-                },
-            },
-            internal: Internal {
-                query_parameter: "search?q={}".to_owned(),
-                suggestion_url_template: Some("suggestion_{}".to_owned()),
-            },
-        };
-        assert_eq!(config.search_url("target"), "mainURL/search?q=target");
-        assert_eq!(
-            config.suggestion_url("target").unwrap(),
-            "suggestion_target"
-        );
+        suggestion_url
     }
 }

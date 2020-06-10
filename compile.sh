@@ -5,12 +5,14 @@ features=(
     "google"
     "google"
     "wikipedia"
+    "google_maps api_key"
 )
 providers=(
     "Google"
     "Google Image"
     "Youtube"
     "Wikipedia"
+    "Google Maps"
 )
 
 function buildrs {
@@ -24,7 +26,12 @@ function clean_buildrs {
 mkdir -p outcome
 for index in ${!providers[@]}; do
     buildrs "${providers[$index]}"
-    PROVIDER_NAME=${providers[$index]} cargo build --features ${features[$index]} --release
+    features=${features[$index]}
+
+    PROVIDER_NAME=${providers[$index]} cargo build\
+        --features "$features"\
+        --release
+
     mkdir -p temporary
     mkdir -p temporary/executables
     mkdir -p temporary/resources
